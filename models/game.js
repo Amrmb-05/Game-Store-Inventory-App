@@ -9,19 +9,21 @@ const GameScheema = new Schema({
   inStock: { type: Number, required: true },
   developer: { type: Schema.Types.ObjectId, ref: "Developer", required: true },
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
-  platform: {
-    type: String,
-    required: true,
-    enum: [
-      "PS5",
-      "PS4",
-      "Xbox Series X",
-      "Xbox One",
-      "Windows",
-      "Mac",
-      "Nintendo Switch",
-    ],
-  },
+  platform: [
+    {
+      type: String,
+      required: true,
+      enum: [
+        "PS5",
+        "PS4",
+        "Xbox Series X",
+        "Xbox One",
+        "Windows",
+        "Mac",
+        "Nintendo Switch",
+      ],
+    },
+  ],
 });
 
 GameScheema.virtual("url").get(function () {
