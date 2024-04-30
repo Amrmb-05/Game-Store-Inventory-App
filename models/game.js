@@ -10,9 +10,6 @@ const GameScheema = new Schema({
   genre: [{ type: Schema.Types.ObjectId, ref: "Gerne" }],
 });
 
-GameScheema.virtual(
-  "url",
-  get(function () {
-    return `catalog/game/${this._id}`;
-  }),
-);
+GameScheema.virtual("url").get(function () {
+  return `catalog/game/${this._id}`;
+});
