@@ -6,6 +6,7 @@ const GameScheema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
+  inStock: { type: Number, required: true },
   developer: { type: Schema.Types.ObjectId, ref: "Developer", required: true },
   genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
   platform: {
