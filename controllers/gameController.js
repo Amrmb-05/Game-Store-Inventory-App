@@ -67,3 +67,24 @@ exports.game_detail = asyncHandler(async (req, res, next) => {
 
   res.render("game_detail", { title: game.title, game: game });
 });
+
+exports.game_create_get = asyncHandler(async (req, res, next) => {
+  const [devs, genres] = await Promise.all([
+    Dev.find({}).sort({ name: 1 }).exec(),
+    Genre.find({}).sort({ name: 1 }).exec(),
+  ]);
+  const platforms = [
+    "PS5",
+    "PS4",
+    "Xbox Series X",
+    "Xbox One",
+    "Windows",
+    "Nintendo Switch",
+  ];
+  res.render("game_form", {
+    title: "Add Game",
+    devs: devs,
+    genres: genres,
+    platforms: platforms,
+  });
+});
