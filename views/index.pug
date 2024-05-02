@@ -2,4 +2,19 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+
+  p Welcome to #[em Game Inventory], a very basic Express website developed as a project for The Odin Project.
+
+  p The inventory has the following record counts:
+  ul 
+    li #[strong Games:] !{game_count}
+    li #[strong Developers:] !{dev_count}
+    li #[strong Genres:] !{genre_count}
+    li #[strong PS5 Games:] !{ps5_count}
+    li #[strong PS4 Games:] !{ps4_count}
+    li #[strong Xbox Series X Games:] !{xboxSX_count}
+    li #[strong Xbox One Games:] !{xboxOnecount}
+    li #[strong PC Games:] !{windows_count}
+    li #[strong Nintendo Switch:] !{switch_count}
+
+
