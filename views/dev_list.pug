@@ -1,0 +1,11 @@
+extends layout 
+
+block content  
+    h1= title 
+    if devs.length
+        ul 
+            each dev in devs 
+              li 
+                a(href=dev.url) #{dev.name}
+    else 
+        p There are no developers
