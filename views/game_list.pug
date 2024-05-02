@@ -1,0 +1,10 @@
+extends layout 
+block content 
+
+    h1= title 
+    if games.length
+        ul 
+            each game in games 
+                li 
+                    a(href=game.url) #{game.title}
+                    |  (#{game.developer.name})
