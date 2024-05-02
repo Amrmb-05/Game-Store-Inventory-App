@@ -13,5 +13,9 @@ exports.genre_detail = asyncHandler(async (req, res, next) => {
   const genre_games = await Game.find(
     { genre: req.params.id },
     "title description",
-  ).sort({ title: 1 });
+  )
+    .sort({ title: 1 })
+    .exec();
+
+  res.render("genre_detail", { genre: genre, genre_games: genre_games });
 });
