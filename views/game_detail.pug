@@ -4,7 +4,7 @@ block content
   h1 Title: #{game.title}
 
   p #[strong Developer: ]
-    a(href=book.developer.url) #{book.developer.name}
+    a(href=game.developer.url) #{game.developer.name}
   p #[strong Summary:] #{game.description}
   p #[strong Genre: ]
     each val, index in game.genre
@@ -22,6 +22,6 @@ block content
 
   hr
   p
-    a(href=book.url+'/delete') Delete Game
+    a(href=game.url+'/delete') Delete Game
   p
-    a(href=book.url+'/update') Update Game
+    a(href=game.url+'/update') Update Game
