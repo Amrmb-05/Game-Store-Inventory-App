@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
+const game_controller = require("../controllers/gameController");
 // Get catalog home page
 router.get("/", game_controller.index);
 
 // Get request for creating a game
 router.get("/game/create", game_controller.game_create_get);
 // Post request for creating a game
-router.post("game/create", game_controller.game_create_post);
+router.post("/game/create", game_controller.game_create_post);
 
 // delete game requests
 router.get("/game/:id/delete", game_controller.game_delete_get);

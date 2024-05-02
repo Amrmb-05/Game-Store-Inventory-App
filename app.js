@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const catalogRouter = require("./routes/catalog");
 
 const app = express();
 // mongodb+srv://amoreemb:amoree1@cluster0.pbv9tpd.mongodb.net/Game-inventory?retryWrites=true&w=majority&appName=Cluster0
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
