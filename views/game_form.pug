@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST')
+    div.form-group
+      label(for='title') Title:
+      input#title.form-control(type='text', placeholder='Name of game' name='title' required value=(undefined=== game ? '' : game.title) )
+    div.form-group
+      label(for='developer') Developer:
+      select#dev.form-control(name='developer' required)
+        option(value='') --Please select a developer--
+        for dev in devs
+          if game
+            if dev._id.toString()===game.dev._id.toString()
+              option(value=dev._id selected) #{dev.name}
+            else
+              option(value=dev._id) #{dev.name}
+          else
+            option(value=dev._id) #{dev.name}
+    div.form-group
+      label(for='description') Description:
+      textarea#description.form-control(placeholder='description' name='description' required)= undefined===description ? '' : game.description
+    div.form-group
+      label(for='price') Price:
+      input#price.form-control(type='float', placeholder='$59.99' name='price' value=(undefined===game ? '' : game.price) required)
+      div.form-group
+      label(for='inStock') Stock:
+      input#inStock.form-control(type='number', placeholder='12' name='inStock' value=(undefined===game ? '' : game.inStock) required)
+    div.form-group
+      label Genre:
+       div
+        for genre in genres
+          div(style='display: inline; padding-right:10px;')
+            if genre.checked
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked)
+            else
+              input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id)
+            label(for=genre._id) &nbsp;#{genre.name}
+    div.form-group
+      label Platforms: 
+      div 
+       for platform in platforms 
+         div(style='display: inline; padding-right:10px;')
+            if(platform.checked)
+                input.checkbox-input(type='checkbox', name='platform', id=platform,value=platform, checked)
+            else
+              input.checkbox-input(type='checkbox', name='platform', id=platform, value=platform)
+            label(for=platform) &nbsp;#{platform}
+
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
