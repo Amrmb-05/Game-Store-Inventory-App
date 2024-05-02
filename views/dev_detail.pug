@@ -1,0 +1,19 @@
+extends layout 
+block content 
+    h1 Developer: #{dev.name}
+    div(style='margin-left:20px;margin-top:20px')
+        h4 Games
+        if dev_games.length 
+            dl
+                each game in dev_games
+                    dt
+                        a(href=game.url) #{game.title}
+                    dd #{game.description}
+        else
+            p This developre has no games.
+
+    hr
+    p 
+        a(href=dev.url+"/update") Update Developer
+    p 
+        a(href=dev.url+'/delete') Delete Developer
