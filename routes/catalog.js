@@ -38,6 +38,7 @@ router.get("/game/:id", game_controller.game_detail);
 // router.get("/dev/:id/update", dev_controller.dev_update_get);
 // router.post("/dev/:id/update", dev_controller.dev_update_post);
 router.get("/devs", dev_controler.dev_list);
+router.get("/dev/:id", dev_controler.dev_detail);
 // Genre routes
 
 // // Create Genre requests
