@@ -18,8 +18,11 @@ router.post("/game/:id/delete", game_controller.game_delete_post);
 router.get("/game/:id/update", game_controller.game_update_get);
 router.post("/game/:id/update", game_controller.game_update_post);
 
-//
+// //
 router.get("/games", game_controller.game_list);
+
+// Get game detail
+router.get("/game/:id", game_controller.game_detail);
 // Developer routes
 
 // Create developer requests
@@ -33,9 +36,9 @@ router.post("/dev/:id/delete", dev_controller.dev_delete_post);
 router.get("/dev/:id/update", dev_controller.dev_update_get);
 router.post("/dev/:id/update", dev_controller.dev_update_post);
 
-// Genre routes
+Genre routes
 
-// Create Genre requests
+Create Genre requests
 router.get("/genre/create", genre_controller.genre_create_get);
 router.post("/genre/create", genre_controller.genre_create_post);
 // Delete genre requests
