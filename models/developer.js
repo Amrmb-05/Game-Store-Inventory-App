@@ -9,4 +9,4 @@ DevSchema.virtual("url").get(function () {
   return `/catalog/dev/${this._id}`;
 });
 
-module.exports = mongoose.model("Dev", DevSchema);
+module.exports = mongoose.model("Developer", DevSchema);
