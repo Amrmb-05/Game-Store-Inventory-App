@@ -13,7 +13,7 @@ block content
         option(value='') --Please select a developer--
         for dev in devs
           if game
-            if dev._id.toString()===game.dev._id.toString()
+            if dev._id.toString()===game.developer._id.toString()
               option(value=dev._id selected) #{dev.name}
             else
               option(value=dev._id) #{dev.name}
@@ -21,7 +21,7 @@ block content
             option(value=dev._id) #{dev.name}
     div.form-group
       label(for='description') Description:
-      textarea#description.form-control(placeholder='description' name='description' required)= undefined===description ? '' : game.description
+      textarea#description.form-control(placeholder='description' name='description' required value=(undefined===game ? '' : game.description))
     div.form-group
       label(for='price') Price:
       input#price.form-control(type='float', placeholder='$59.99' name='price' value=(undefined===game ? '' : game.price) required)
@@ -43,7 +43,7 @@ block content
       div 
        for platform in platforms 
          div(style='display: inline; padding-right:10px;')
-            if(platform.checked)
+            if platform.checked
                 input.checkbox-input(type='checkbox', name='platform', id=platform,value=platform, checked)
             else
               input.checkbox-input(type='checkbox', name='platform', id=platform, value=platform)
