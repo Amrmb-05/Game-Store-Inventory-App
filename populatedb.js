@@ -46,7 +46,7 @@ async function genreCreate(index, name) {
 async function devCreate(index, name) {
   const devdetail = { name };
 
-  const dev = new Developer(name);
+  const dev = new Developer(devdetail);
 
   await dev.save();
   devs[index] = dev;
@@ -72,7 +72,7 @@ async function gameCreate(
     genre: genre,
     platform: platform,
   };
-  if (genre != false) bookdetail.genre = genre;
+  if (genre != false) gamedetail.genre = genre;
 
   const game = new Game(gamedetail);
   await game.save();
