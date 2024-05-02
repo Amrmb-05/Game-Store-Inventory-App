@@ -49,4 +49,6 @@ router.get("/game/:id", game_controller.game_detail);
 // router.get("/genre/:id/update", genre_controller.genre_update_get);
 // router.post("/genre/:id/update", genre_controller.genre_update_post);
 router.get("/genres", genre_controller.genre_list);
+
+router.get("/genre/:id", genre_controller.genre_detail);
 module.exports = router;
