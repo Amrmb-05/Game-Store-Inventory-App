@@ -3,6 +3,7 @@ const router = express.Router();
 
 const game_controller = require("../controllers/gameController");
 const genre_controller = require("../controllers/genreController");
+const dev_controler = require("../controllers/devController");
 // Get catalog home page
 router.get("/", game_controller.index);
 
@@ -36,7 +37,7 @@ router.get("/game/:id", game_controller.game_detail);
 // // Update developer requests
 // router.get("/dev/:id/update", dev_controller.dev_update_get);
 // router.post("/dev/:id/update", dev_controller.dev_update_post);
-
+router.get("/devs", dev_controler.dev_list);
 // Genre routes
 
 // // Create Genre requests
