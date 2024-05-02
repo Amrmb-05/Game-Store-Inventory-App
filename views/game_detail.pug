@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1 Title: #{game.title}
+
+  p #[strong Developer: ]
+    a(href=book.developer.url) #{book.developer.name}
+  p #[strong Summary:] #{game.description}
+  p #[strong Genre: ]
+    each val, index in game.genre
+      a(href=val.url) #{val.name}
+      if index < game.genre.length - 1
+        |,&nbsp;
+  p #[strong Price]: #{game.price}
+  p #[strong Stock:] #{game.inStock}
+  div(style='margin-left:20px;margin-top:20px')
+ 
+  p #[strong Platforms:] 
+  ul  
+    each platform in game.platform
+     li #{paltform}
+
+  hr
+  p
+    a(href=book.url+'/delete') Delete Game
+  p
+    a(href=book.url+'/update') Update Game
