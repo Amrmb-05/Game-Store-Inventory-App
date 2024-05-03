@@ -175,3 +175,134 @@ exports.game_create_post = [
     }
   }),
 ];
+
+exports.game_update_get = asyncHandler(async (req, res, next) => {
+  const [devs, genres, game] = await Promise.all([
+    Dev.find({}).sort({ name: 1 }).exec(),
+    Genre.find({}).sort({ name: 1 }).exec(),
+    Game.findById(req.params.id).exec(),
+  ]);
+  if (game === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+  const platforms = [
+    "PS5",
+    "PS4",
+    "Xbox Series X",
+    "Xbox One",
+    "Windows",
+    "Nintendo Switch",
+  ];
+
+  for (const genre of genres) {
+    if (game.genre.includes(genre._id)) {
+      genre.checked = "true";
+      console.log(genre);
+    }
+  }
+
+  for (const platform of platforms) {
+    if (game.platform.includes(platform)) {
+      platform.checked = "true";
+    }
+  }
+  res.render("game_form", {
+    title: "Update Game",
+    game: game,
+    genres: genres,
+    devs: devs,
+    platforms: platforms,
+  });
+});
+
+exports.game_update_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.genre)) {
+      req.body.genre =
+        typeof req.body.genre === "undefined" ? [] : [req.body.genre];
+    }
+    if (!Array.isArray(req.body.platform)) {
+      req.body.platform =
+        typeof req.body.platform === "undefined" ? [] : [req.body.platform];
+    }
+    next();
+  },
+
+  body("title", "Title must not be empty").trim().isLength({ min: 3 }).escape(),
+  body("description", "Description must not be empty")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  body("developer", "Developer must not be empty")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("price", "Price must not be empty").trim().isLength({ min: 1 }).escape(),
+  body("inStock", "inStock must bot be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("genre.*").escape(),
+  body("platform.*").escape(),
+
+  asyncHandler(async (req, res, next) => {
+    // Get validation errors from the request
+    const errors = validationResult(req);
+
+    const game = new Game({
+      title: req.body.title,
+      description: req.body.description,
+      price: req.body.price,
+      inStock: req.body.inStock,
+      developer: req.body.developer,
+      genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
+      platform:
+        typeof req.body.platform === "undefined" ? [] : req.body.platform,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      const [devs, genres] = await Promise.all([
+        Dev.find({}).sort({ name: 1 }).exec(),
+        Genre.find({}).sort({ name: 1 }).exec(),
+      ]);
+      const platforms = [
+        "PS5",
+        "PS4",
+        "Xbox Series X",
+        "Xbox One",
+        "Windows",
+        "Nintendo Switch",
+      ];
+
+      // Mark our selected genres as checked.
+      for (const genre of genres) {
+        if (game.genre.includes(genre._id)) {
+          genre.checked = "true";
+        }
+      }
+
+      for (const platform of platforms) {
+        if (game.platform.includes(platform)) {
+          platform.checked = "true";
+        }
+      }
+
+      res.render("game_form", {
+        title: "Update Game",
+        devs: devs,
+        genres: genres,
+        platforms: platforms,
+        game: game,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const updatedGame = await Game.findByIdAndUpdate(req.params.id, game, {});
+      res.redirect(updatedGame.url);
+    }
+  }),
+];
