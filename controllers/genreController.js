@@ -104,3 +104,35 @@ exports.genre_update_post = [
     }
   }),
 ];
+
+exports.genre_delete_get = asyncHandler(async (req, res, next) => {
+  const genre = await Genre.findById(req.params.id).exec();
+
+  if (genre === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("genre_delete", { title: "Delete Genre", genre: genre });
+});
+
+exports.genre_delete_post = asyncHandler(async (req, res, next) => {
+  const genre = await Genre.findById(req.params.id).exec();
+
+  if (genre === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  if (req.body.password === "amr3") {
+    await Genre.findByIdAndDelete(req.body.genreid);
+    res.redirect("/catalog/genres");
+  } else {
+    res.render("genre_delete", {
+      title: "Delete genre",
+      genre: genre,
+      password: "Incorrect Password",
+    });
+  }
+});
