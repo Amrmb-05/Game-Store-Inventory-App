@@ -1,7 +1,8 @@
 const Game = require("../models/game");
 const Dev = require("../models/developer");
 const Genre = require("../models/genre");
-
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -90,6 +91,7 @@ exports.game_create_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.game_create_post = [
+  // upload.single("image"),
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre =
@@ -124,7 +126,6 @@ exports.game_create_post = [
   asyncHandler(async (req, res, next) => {
     // Get validation errors from the request
     const errors = validationResult(req);
-
     const game = new Game({
       title: req.body.title,
       description: req.body.description,
@@ -134,7 +135,7 @@ exports.game_create_post = [
       genre: req.body.genre,
       platform: req.body.platform,
     });
-
+    // console.log(req.file);
     if (!errors.isEmpty()) {
       const [devs, genres] = await Promise.all([
         Dev.find({}).sort({ name: 1 }).exec(),
@@ -301,8 +302,8 @@ exports.game_update_post = [
       });
       return;
     } else {
-      const updatedGame = await Game.findByIdAndUpdate(req.body.id, game, {});
-      res.redirect(updatedGame.url);
+      await Game.findByIdAndUpdate(req.params.id, game, {});
+      res.redirect(game.url);
     }
   }),
 ];
