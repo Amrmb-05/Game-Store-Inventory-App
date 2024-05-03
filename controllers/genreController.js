@@ -57,3 +57,50 @@ exports.genre_create_post = [
     }
   }),
 ];
+
+exports.genre_update_get = asyncHandler(async (req, res, next) => {
+  const genre = await Genre.findById(req.params.id).exec();
+
+  if (genre === null) {
+    const err = new Error("Genre not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("genre_form", { title: "Update Genre", genre: genre });
+});
+
+exports.genre_update_post = [
+  body("name", "name must be more than 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const genre = new Genre({
+      name: req.body.name,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      req.render("genre_form", {
+        title: "Add Genre",
+        genre: genre,
+        errors: errors.array(),
+      });
+    } else {
+      // Check if genre exists
+      const genreExists = await Genre.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+      if (genreExists) {
+        res.redirect(genreExists.url);
+      } else {
+        await Genre.findByIdAndUpdate(req.params.id, genre);
+        res.redirect(genre.url);
+      }
+    }
+  }),
+];
