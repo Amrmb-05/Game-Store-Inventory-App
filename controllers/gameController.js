@@ -301,7 +301,7 @@ exports.game_update_post = [
       });
       return;
     } else {
-      const updatedGame = await Game.findByIdAndUpdate(req.params.id, game, {});
+      const updatedGame = await Game.findByIdAndUpdate(req.body.id, game, {});
       res.redirect(updatedGame.url);
     }
   }),
