@@ -8,9 +8,9 @@ const dev_controler = require("../controllers/devController");
 router.get("/", game_controller.index);
 
 // Get request for creating a game
-// router.get("/game/create", game_controller.game_create_get);
+router.get("/game/create", game_controller.game_create_get);
 // // Post request for creating a game
-// router.post("/game/create", game_controller.game_create_post);
+router.post("/game/create", game_controller.game_create_post);
 
 // // delete game requests
 // router.get("/game/:id/delete", game_controller.game_delete_get);

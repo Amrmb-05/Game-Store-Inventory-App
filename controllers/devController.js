@@ -23,3 +23,34 @@ exports.dev_detail = asyncHandler(async (req, res, next) => {
 
   res.render("dev_detail", { dev: dev, dev_games: dev_games });
 });
+
+exports.dev_create_get = (req, rex, next) => {
+  res.render("dev_form", { title: "Add Developer" });
+};
+
+exports.dev_create_post = [
+  body("name", "Name must be atleast 3 characters long")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const dev = new Dev({
+      name: req.body.name,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("dev_form", {
+        title: "Add Developer",
+        dev: dev,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      await dev.save();
+      res.redirect(dev.url);
+    }
+  }),
+];
