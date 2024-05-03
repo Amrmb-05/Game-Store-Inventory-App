@@ -306,3 +306,26 @@ exports.game_update_post = [
     }
   }),
 ];
+
+exports.game_delete_get = asyncHandler(async (req, res, next) => {
+  const game = await Game.findById(req.params.id).exec();
+
+  if (game === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("game_delete", { title: "Delete game", game: game });
+});
+
+exports.game_delete_post = asyncHandler(async (req, res, next) => {
+  if (req.body.password === "amr3") {
+    await Game.findByIdAndDelete(req.params.id);
+    res.redirect("/catalog/games");
+  } else {
+    res.render("game_delete", {
+      title: "Delete game",
+      password: "Incorrect Password",
+    });
+  }
+});
