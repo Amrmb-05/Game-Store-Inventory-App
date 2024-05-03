@@ -21,7 +21,7 @@ block content
             option(value=dev._id) #{dev.name}
     div.form-group
       label(for='description') Description:
-      textarea#description.form-control(placeholder='description' name='description' required value=(undefined===game ? '' : game.description))
+      textarea#description.form-control(placeholder='description' name='description' required)= undefined===game ? '' : game.description
     div.form-group
       label(for='price') Price:
       input#price.form-control(type='float', placeholder='$59.99' name='price' value=(undefined===game ? '' : game.price) required)
