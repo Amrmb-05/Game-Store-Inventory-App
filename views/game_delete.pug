@@ -1,6 +1,9 @@
 extends layout 
 
 block content
+    h1 #{title}: #{game.title}
+    div(style='margin-left:20px;margin-top:20px')
+
         p Do you really want to delete this Game?
         form(method="post") 
             div.form-group
