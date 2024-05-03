@@ -24,7 +24,7 @@ exports.dev_detail = asyncHandler(async (req, res, next) => {
   res.render("dev_detail", { dev: dev, dev_games: dev_games });
 });
 
-exports.dev_create_get = (req, rex, next) => {
+exports.dev_create_get = (req, res, next) => {
   res.render("dev_form", { title: "Add Developer" });
 };
 
@@ -49,8 +49,15 @@ exports.dev_create_post = [
       });
       return;
     } else {
-      await dev.save();
-      res.redirect(dev.url);
+      const devExists = await Dev.findOne({ name: req.body.name })
+        .collation({ locale: "en", strength: 2 })
+        .exec();
+      if (devExists) {
+        res.redirect(devExists.url);
+      } else {
+        await dev.save();
+        res.redirect(dev.url);
+      }
     }
   }),
 ];
