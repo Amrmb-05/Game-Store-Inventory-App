@@ -1,0 +1,15 @@
+extends layout 
+
+block content
+    h1 #{title}: #{dev.name}
+    div(style='margin-left:20px;margin-top:20px')
+            
+        p Do you really want to delete this Developer?
+        form(method="post") 
+            div.form-group
+                label(for="password") Admin Password: 
+                input#password(type="password", name="password") 
+                if password 
+                    p= password
+            input#devid.form-control(type="hidden", name='devid', value=dev._id)
+            button.btn.btn-primary(type="submit") Delete
