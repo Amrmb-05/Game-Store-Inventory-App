@@ -106,3 +106,13 @@ exports.dev_update_post = [
     }
   }),
 ];
+
+// exports.dev_delete_get = asyncHandler(async (req, res, next) => {
+//   const dev = await Dev.findById(req.params.id).exec();
+
+//   if (dev === null) {
+//     const err = new Error("Game not found");
+//     err.status = 404;
+//     return next(err);
+//   }
+//   res.render("dev_delete", {title: "Delete Developer", de})

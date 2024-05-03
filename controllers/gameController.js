@@ -319,12 +319,15 @@ exports.game_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.game_delete_post = asyncHandler(async (req, res, next) => {
+  const game = await Game.findById(req.params.id).exec();
+
   if (req.body.password === "amr3") {
-    await Game.findByIdAndDelete(req.params.id);
+    await Game.findByIdAndDelete(req.body.id);
     res.redirect("/catalog/games");
   } else {
     res.render("game_delete", {
       title: "Delete game",
+      game: game,
       password: "Incorrect Password",
     });
   }
