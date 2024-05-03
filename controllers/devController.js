@@ -107,12 +107,34 @@ exports.dev_update_post = [
   }),
 ];
 
-// exports.dev_delete_get = asyncHandler(async (req, res, next) => {
-//   const dev = await Dev.findById(req.params.id).exec();
+exports.dev_delete_get = asyncHandler(async (req, res, next) => {
+  const dev = await Dev.findById(req.params.id).exec();
 
-//   if (dev === null) {
-//     const err = new Error("Game not found");
-//     err.status = 404;
-//     return next(err);
-//   }
-//   res.render("dev_delete", {title: "Delete Developer", de})
+  if (dev === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("dev_delete", { title: "Delete Developer", dev: dev });
+});
+
+exports.dev_delete_post = asyncHandler(async (req, res, next) => {
+  const dev = await Dev.findById(req.params.id).exec();
+
+  if (dev === null) {
+    const err = new Error("Game not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  if (req.body.password === "amr3") {
+    await Dev.findByIdAndDelete(req.body.devid);
+    res.redirect("/catalog/devs");
+  } else {
+    res.render("dev_delete", {
+      title: "Delete Developer",
+      dev: dev,
+      password: "Incorrect Password",
+    });
+  }
+});
