@@ -1,0 +1,15 @@
+extends layout 
+
+block content
+    h1 #{title}: #{genre.name}
+    div(style='margin-left:20px;margin-top:20px')
+            
+        p Do you really want to delete this Genre?
+        form(method="post") 
+            div.form-group
+                label(for="password") Admin Password: 
+                input#password(type="password", name="password") 
+                if password 
+                    p= password
+            input#genreid.form-control(type="hidden", name='genreid', value=genre._id)
+            button.btn.btn-primary(type="submit") Delete

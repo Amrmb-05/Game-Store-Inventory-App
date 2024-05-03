@@ -32,8 +32,8 @@ router.get("/dev/create", dev_controller.dev_create_get);
 router.post("/dev/create", dev_controller.dev_create_post);
 
 // // Delete developer requests
-// router.get("/dev/:id/delete", dev_controller.dev_delete_get);
-// router.post("/dev/:id/delete", dev_controller.dev_delete_post);
+router.get("/dev/:id/delete", dev_controller.dev_delete_get);
+router.post("/dev/:id/delete", dev_controller.dev_delete_post);
 // // Update developer requests
 router.get("/dev/:id/update", dev_controller.dev_update_get);
 router.post("/dev/:id/update", dev_controller.dev_update_post);
@@ -45,8 +45,8 @@ router.get("/dev/:id", dev_controller.dev_detail);
 router.get("/genre/create", genre_controller.genre_create_get);
 router.post("/genre/create", genre_controller.genre_create_post);
 // // Delete genre requests
-// router.get("/genre/:id/delete", genre_controller.genre_delete_get);
-// router.post("/genre/:id/delete", genre_controller.genre_delete_post);
+router.get("/genre/:id/delete", genre_controller.genre_delete_get);
+router.post("/genre/:id/delete", genre_controller.genre_delete_post);
 // // Update genre requests
 router.get("/genre/:id/update", genre_controller.genre_update_get);
 router.post("/genre/:id/update", genre_controller.genre_update_post);
