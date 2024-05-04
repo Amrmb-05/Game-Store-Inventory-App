@@ -20,7 +20,7 @@ mongoose.set("strictQuery", false);
 const dev_db_url =
   "mongodb+srv://amoreemb:amoree1@cluster0.pbv9tpd.mongodb.net/Game-inventory?retryWrites=true&w=majority&appName=Cluster0";
 
-const mongoDB = process.env.MONGO_DB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
