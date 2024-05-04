@@ -219,7 +219,6 @@ exports.game_update_get = asyncHandler(async (req, res, next) => {
   for (const genre of genres) {
     if (game.genre.includes(genre._id)) {
       genre.checked = "true";
-      console.log(genre);
     }
   }
 
@@ -228,6 +227,7 @@ exports.game_update_get = asyncHandler(async (req, res, next) => {
       platform.checked = "true";
     }
   }
+  console.log(game.gameImage);
   res.render("game_form", {
     title: "Update Game",
     game: game,
@@ -277,7 +277,7 @@ exports.game_update_post = [
     const game = new Game({
       title: req.body.title,
       description: req.body.description,
-      gameImage: req.file.path,
+      gameImage: req.file === undefined ? undefined : req.file.path,
       price: req.body.price,
       inStock: req.body.inStock,
       developer: req.body.developer,
