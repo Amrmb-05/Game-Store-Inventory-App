@@ -277,7 +277,7 @@ exports.game_update_post = [
     const game = new Game({
       title: req.body.title,
       description: req.body.description,
-      gameImage: req.file === undefined ? undefined : req.file.path,
+      gameImage: req.file === undefined ? "" : req.file.path,
       price: req.body.price,
       inStock: req.body.inStock,
       developer: req.body.developer,
