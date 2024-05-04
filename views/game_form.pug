@@ -3,10 +3,13 @@ extends layout
 block content
   h1= title
 
-  form(method='POST')
+  form(method='POST', enctype='multipart/form-data')
     div.form-group
       label(for='title') Title:
       input#title.form-control(type='text', placeholder='Name of game' name='title' required value=(undefined=== game ? '' : game.title) )
+    div.form-group
+    label(for="image") Upload Image: 
+    input.form-control(type="file" name="image") 
     div.form-group
       label(for='developer') Developer:
       select#dev.form-control(name='developer' required)
