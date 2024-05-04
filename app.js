@@ -4,19 +4,21 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
-
+const compression = require("compression");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const catalogRouter = require("./routes/catalog");
 
 const app = express();
-// mongodb+srv://amoreemb:amoree1@cluster0.pbv9tpd.mongodb.net/Game-inventory?retryWrites=true&w=majority&appName=Cluster0
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 mongoose.set("strictQuery", false);
-const mongoDB =
+
+const dev_db_url =
   "mongodb+srv://amoreemb:amoree1@cluster0.pbv9tpd.mongodb.net/Game-inventory?retryWrites=true&w=majority&appName=Cluster0";
+
+const mongoDB = process.env.MONGO_DB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -26,8 +28,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
+app.use(compression());
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/catalog", catalogRouter);
