@@ -9,7 +9,7 @@ block content
       input#title.form-control(type='text', placeholder='Name of game' name='title' required value=(undefined=== game ? '' : game.title) )
     div.form-group
     label(for="image") Upload Image: 
-    input.form-control(type="file" name="image") 
+    input.form-control(type="file" name="image" accept="image/png, image/jpeg") 
     div.form-group
       label(for='developer') Developer:
       select#dev.form-control(name='developer' required)
