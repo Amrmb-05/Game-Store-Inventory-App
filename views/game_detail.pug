@@ -2,8 +2,9 @@ extends layout
 
 block content
   h1 Title: #{game.title}
-  div(style='margin-left:20px;margin-top:20px')
-    img(src=`/${game.gameImage}`, alt=game.title, style="width: 250px;")
+  if game.Image
+    div(style='margin-left:20px;margin-top:20px')
+      img(src=`/${game.gameImage}`, alt=game.title, style="width: 250px;")
   p #[strong Developer: ]
     a(href=game.developer.url) #{game.developer.name}
   p #[strong Summary:] #{game.description}
