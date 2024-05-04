@@ -2,9 +2,26 @@ const Game = require("../models/game");
 const Dev = require("../models/developer");
 const Genre = require("../models/genre");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const sharp = require("sharp");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new Error("File wasn't an image."), false);
+  }
+};
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 exports.index = asyncHandler(async (req, res, next) => {
   const [
@@ -91,7 +108,8 @@ exports.game_create_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.game_create_post = [
-  // upload.single("image"),
+  upload.single("image"),
+
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre =
@@ -126,16 +144,17 @@ exports.game_create_post = [
   asyncHandler(async (req, res, next) => {
     // Get validation errors from the request
     const errors = validationResult(req);
+
     const game = new Game({
       title: req.body.title,
       description: req.body.description,
+      gameImage: req.file.path,
       price: req.body.price,
       inStock: req.body.inStock,
       developer: req.body.developer,
       genre: req.body.genre,
       platform: req.body.platform,
     });
-    // console.log(req.file);
     if (!errors.isEmpty()) {
       const [devs, genres] = await Promise.all([
         Dev.find({}).sort({ name: 1 }).exec(),
@@ -219,6 +238,8 @@ exports.game_update_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.game_update_post = [
+  upload.single("image"),
+
   (req, res, next) => {
     if (!Array.isArray(req.body.genre)) {
       req.body.genre =
@@ -256,6 +277,7 @@ exports.game_update_post = [
     const game = new Game({
       title: req.body.title,
       description: req.body.description,
+      gameImage: req.file.path,
       price: req.body.price,
       inStock: req.body.inStock,
       developer: req.body.developer,
